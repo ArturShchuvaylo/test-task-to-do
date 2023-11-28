@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from "react";
+import TaskList from "./Components/TaskList";
+import ItemList from "./Components/ItemList";
 
 function App() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    // Асинхронная функция для получения данных с сервера
+    // Asynchronous function to fetch data from the server
     const fetchData = async () => {
       try {
-        // Выполнение GET-запроса к API
+        // Performing a GET request to the API
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/todos"
         );
         const data = await response.json();
         setTasks(data);
       } catch (error) {
-        // Обработка ошибок при выполнении запроса
+        // Handling errors during the request
         console.error("Error fetching tasks:", error);
       }
     };
-
-    // Вызов функции fetchData при монтировании компонента
+    // Calling the fetchData function when the component mounts
     fetchData();
   }, []);
 
   return (
     <div className="App">
       <h1>Todo List</h1>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>{task.title}</li>
-        ))}
-      </ul>
+      <TaskList>
+        <ItemList tasks={tasks} />
+      </TaskList>
     </div>
   );
 }
