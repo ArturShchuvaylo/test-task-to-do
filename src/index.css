@@ -1,29 +1,116 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* src/components/TodoList.css */
+.todo-list {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.todo-list h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item button {
+  margin-left: 10px;
+}
+
 .pagination {
   display: flex;
   list-style: none;
   padding: 0;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .pagination__link {
   margin: 0 5px;
   cursor: pointer;
+  color: #007bff;
 }
 
 .pagination__link--disabled {
   color: gray;
   pointer-events: none;
+}
+
+/* New styles for responsive design */
+@media screen and (max-width: 600px) {
+  .todo-list {
+    padding: 10px;
+  }
+
+  .task-item {
+    flex-direction: column;
+  }
+
+  .task-item button {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+/* src/components/TodoForm.css */
+.todo-form {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.todo-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.todo-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.todo-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.todo-form button:hover {
+  background-color: #0056b3;
+}
+
+.todo-form button[type="button"] {
+  background-color: #ccc;
+  margin-left: 10px;
+}
+
+.todo-form button[type="button"]:hover {
+  background-color: #999;
+}
+
+/* New styles for responsive design */
+@media screen and (max-width: 400px) {
+  .todo-form button {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+
+  .todo-form button[type="button"] {
+    width: 100%;
+    margin-left: 0;
+  }
 }

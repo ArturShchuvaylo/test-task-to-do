@@ -9,7 +9,7 @@ const TodoForm = ({ onSubmit, onCancel, task }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="todo-form">
       <label>
         Task Title:
         <input
