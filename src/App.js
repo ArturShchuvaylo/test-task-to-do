@@ -47,7 +47,7 @@ function App() {
   };
 
   const handleAddTask = (newTask) => {
-    let numOfLastItem = tasks ? tasks[tasks.length - 1]?.num : 0;
+    let numOfLastItem = tasks ? tasks[tasks.length - 1]?.num || 0 : 0;
     if (title) {
       setTasks([
         ...tasks,
