@@ -2,9 +2,9 @@ import React from "react";
 
 const ItemList = ({ displayTasks, setEditingTask, handleDelete, setTitle }) => {
   return displayTasks.map((task) => (
-    <li key={task.id}>
+    <li className="task-item " key={task.id}>
       {task.num}:{task.title}
-      <>
+      <div>
         <button
           onClick={() => {
             setEditingTask(task);
@@ -14,7 +14,7 @@ const ItemList = ({ displayTasks, setEditingTask, handleDelete, setTitle }) => {
           Edit
         </button>
         <button onClick={() => handleDelete(task.id)}>Delete</button>
-      </>
+      </div>
     </li>
   ));
 };
