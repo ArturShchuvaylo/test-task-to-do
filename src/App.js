@@ -6,7 +6,9 @@ import ItemList from "./Components/ItemList";
 import TodoForm from "./Components/TodoForm";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    return getItemFromStore();
+  });
   const [pageNumber, setPageNumber] = useState(0);
   const [editingTask, setEditingTask] = useState(null);
   const tasksPerPage = 10;
@@ -15,20 +17,19 @@ function App() {
     // Asynchronous function to fetch data from the server
     const fetchData = async () => {
       try {
-        // Performing a GET request to the API
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
-        const data = await response.json();
-        setTasks(data);
+        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        setTasks(storedTasks);
       } catch (error) {
-        // Handling errors during the request
         console.error("Error fetching tasks:", error);
       }
     };
     // Calling the fetchData function when the component mounts
     fetchData();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const pageCount = Math.ceil(tasks.length / tasksPerPage);
 
@@ -43,6 +44,7 @@ function App() {
 
   const handleAddTask = (newTask) => {
     setTasks([...tasks, { id: tasks.length + 1, ...newTask }]);
+    setEditingTask(null);
   };
 
   const handleEditTask = (editedTask) => {
@@ -61,6 +63,10 @@ function App() {
   const handleCancelEdit = () => {
     setEditingTask(null);
   };
+
+  function getItemFromStore() {
+    return JSON.parse(localStorage.getItem("tasks"));
+  }
 
   return (
     <div className="todo-list">
