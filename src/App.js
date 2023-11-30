@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
+import { v4 as uuidv4 } from "uuid";
 
 import TaskList from "./Components/TaskList";
 import ItemList from "./Components/ItemList";
@@ -11,12 +12,15 @@ function App() {
   });
   const [pageNumber, setPageNumber] = useState(0);
   const [editingTask, setEditingTask] = useState(null);
+  const [title, setTitle] = useState("");
   const tasksPerPage = 10;
 
   useEffect(() => {
     // Asynchronous function to fetch data from the server
     const fetchData = async () => {
       try {
+        // const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+        // const data = await response.json();
         const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         setTasks(storedTasks);
       } catch (error) {
@@ -43,17 +47,24 @@ function App() {
   };
 
   const handleAddTask = (newTask) => {
-    setTasks([...tasks, { id: tasks.length + 1, ...newTask }]);
-    setEditingTask(null);
+    let numOfLastItem = tasks ? tasks[tasks.length - 1]?.num : 0;
+    if (title) {
+      setTasks([
+        ...tasks,
+        { id: uuidv4(), num: numOfLastItem + 1, ...newTask },
+      ]);
+      setTitle("");
+    }
   };
 
   const handleEditTask = (editedTask) => {
     setTasks(
-      tasks.map((task) =>
-        task.id === editingTask.id ? { ...task, ...editedTask } : task
-      )
+      tasks.map((task) => {
+        return task.id === editingTask.id ? { ...task, ...editedTask } : task;
+      })
     );
     setEditingTask(null);
+    setTitle("");
   };
 
   const handleDelete = (taskId) => {
@@ -62,6 +73,7 @@ function App() {
 
   const handleCancelEdit = () => {
     setEditingTask(null);
+    setTitle("");
   };
 
   function getItemFromStore() {
@@ -72,6 +84,8 @@ function App() {
     <div className="todo-list">
       <h1>Todo List</h1>
       <TodoForm
+        title={title}
+        setTitle={setTitle}
         onSubmit={editingTask ? handleEditTask : handleAddTask}
         onCancel={handleCancelEdit}
         task={editingTask}
@@ -81,6 +95,7 @@ function App() {
           displayTasks={displayTasks}
           setEditingTask={setEditingTask}
           handleDelete={handleDelete}
+          setTitle={setTitle}
         />
       </TaskList>
       <ReactPaginate

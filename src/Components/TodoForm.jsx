@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-const TodoForm = ({ onSubmit, onCancel, task }) => {
-  const [title, setTitle] = useState(task ? task.title : "");
-
+const TodoForm = ({ onSubmit, onCancel, title, setTitle }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ title });

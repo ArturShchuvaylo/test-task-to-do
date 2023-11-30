@@ -1,11 +1,18 @@
 import React from "react";
 
-const ItemList = ({ displayTasks, setEditingTask, handleDelete }) => {
+const ItemList = ({ displayTasks, setEditingTask, handleDelete, setTitle }) => {
   return displayTasks.map((task) => (
     <li key={task.id}>
-      {task.id}:{task.title}
+      {task.num}:{task.title}
       <>
-        <button onClick={() => setEditingTask(task)}>Edit</button>
+        <button
+          onClick={() => {
+            setEditingTask(task);
+            setTitle(task.title);
+          }}
+        >
+          Edit
+        </button>
         <button onClick={() => handleDelete(task.id)}>Delete</button>
       </>
     </li>
